@@ -17,18 +17,18 @@ Extend the PDOActiveRecord class with another class for each database connection
 
 Then, just instantiate that class and go!
 
-//Instantiate DB Connection
-
-$RemoteDB = new MyRemoteDB();
-
-//Make Calls
-
-$FieldValue = $RemoteDB->getByField($tablename, $fieldname, $value);
-
-or
-
-$Objects = $RemoteDB->getAllByWhere($tablename, $array);
-
-or 
-
-$NewObject = $RemoteDB->create($tablename, $array);
+	//Instantiate DB Connection
+	
+	$RemoteDB = new MyRemoteDB();
+	
+	//Make Calls
+	
+	$FieldValue = $RemoteDB->getByField($tablename, $fieldname, $value);
+	
+	or
+	
+	$Objects = $RemoteDB->getAllByWhere($tablename, $array);
+	
+	or 
+	
+	$NewObject = $RemoteDB->create($tablename, $array);
