@@ -4,7 +4,7 @@ PDO-Active-Record
 A PDO Active Record Class for PHP
 
 Extend the PDOActiveRecord class with another class for each database connection:
-
+```php
 	<?php 
 	class MyRemoteDB extends PDOActiveRecord
 	{
@@ -14,9 +14,10 @@ Extend the PDOActiveRecord class with another class for each database connection
 		public $db_password = 'password';
 	}
 	?>
+```
 
 Then, just instantiate that class and go!
-
+```php
 	//Instantiate DB Connection
 	
 	$RemoteDB = new MyRemoteDB();
@@ -32,3 +33,4 @@ Then, just instantiate that class and go!
 	or 
 	
 	$NewObject = $RemoteDB->create($tablename, $array);
+```
