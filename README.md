@@ -7,6 +7,10 @@ A PDO Active Record Class for PHP
 Just instantiate the class and go!
 
 ```php
+	//Include Class
+	
+	require('PDOActiveRecord.class.php');	
+	
 	//Set Database Configuration
 	
 	$config = array(
