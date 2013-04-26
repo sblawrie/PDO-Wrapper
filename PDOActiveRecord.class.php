@@ -8,8 +8,6 @@ class PDOActiveRecord
 	public $db_password;
 	public $dbh;
 	
-	public $primaryKey = 'id';
-	
 	function __construct($config = false) 
 	{
 		if(is_array($config))
@@ -56,7 +54,7 @@ class PDOActiveRecord
 		//to check that there is an id field before using it to get the last object
 		if($this->dbh->lastInsertId())
 		{
-			$stmt = $this->dbh->query("SELECT * FROM $table WHERE {$this->primaryKey}='" . $this->dbh->lastInsertId() . "'");
+			$stmt = $this->dbh->query("SELECT * FROM $table WHERE {$this->getPrimaryKey($table)}='" . $this->dbh->lastInsertId() . "'");
 			return $stmt->fetch(PDO::FETCH_OBJ);
 		}
 		else
@@ -77,7 +75,7 @@ class PDOActiveRecord
 			$tmp[] = "$key=?";
 		}
 		$str = implode(', ', $tmp);
-		$sql = "UPDATE $table SET $str WHERE {$this->primaryKey}='" . $object->id . "'";
+		$sql = "UPDATE $table SET $str WHERE {$this->getPrimaryKey($table)}='" . $object->id . "'";
 		$query = $this->dbh->prepare($sql);
 		$query->execute(array_values($insert));
 		return $this->dbh->exec($sql);
@@ -86,7 +84,7 @@ class PDOActiveRecord
 	
 	public function getByID($table, $id)
 	{
-		return $this->getByField($table, $this->primaryKey, $id);
+		return $this->getByField($table, $this->getPrimaryKey($table), $id);
 	}
 	
 	public function getByField($table, $field, $value, $options = false)
@@ -165,5 +163,13 @@ class PDOActiveRecord
 		}
 		
 		return $insert;
+	}
+	
+	public function getPrimaryKey($table)
+	{
+		$sql = "SHOW KEYS FROM $table WHERE Key_name = 'PRIMARY'";
+		$stmt = $this->dbh->query($sql);	
+		$res = $stmt->fetch(PDO::FETCH_OBJ);
+		return $res->Column_name;
 	}
 }
