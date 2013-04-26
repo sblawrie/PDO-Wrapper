@@ -1,4 +1,5 @@
 <?php
+namespace \Emergence\ActiveRecordPDO
 
 class PDOActiveRecord
 {
