@@ -19,10 +19,6 @@ class PDOActiveRecord
 			$this->db_username = $config['db_username'];
 			$this->db_password = $config['db_password'];
 		}	
-		if(empty($this->host) || empty($this->db_name))
-		{
-			throw new Exception('Configuration Host or Database Name not properly set');
-		}
 		try 
 		{
 		    $this->dbh = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->db_username, $this->db_password);
