@@ -32,7 +32,7 @@ class PDOActiveRecord
 	//Timestamp always set unless otherwise specified
 	{		
 		// Filter out fields that don't exist
-		$insert = $this->filterInsert($insert, $table);
+		$insert = $this->filter($insert, $table);
 		//End Filter
 		
 		
@@ -69,7 +69,7 @@ class PDOActiveRecord
 	public function update($table, $insert, $object)
 	{
 		$tmp = array();
-		$insert = $this->filterInsert($insert, $table);
+		$insert = $this->filter($insert, $table);
 		foreach($insert as $key=>$value)
 		{
 			$tmp[] = "$key=?";
@@ -95,6 +95,7 @@ class PDOActiveRecord
 	
 	public function getByWhere($table, $data, $options = false)
 	{
+		$data = $this->filter($data, $table);
 		$conditions = array();
 		foreach($data as $key=>$value)
 		{
@@ -121,6 +122,7 @@ class PDOActiveRecord
 	
 	public function getAllByWhere($table, $data, $options = false)
 	{
+		$data = $this->filter($data, $table);
 		$conditions = array();
 		foreach($data as $key=>$value)
 		{
@@ -145,7 +147,7 @@ class PDOActiveRecord
 		return $query->fetchAll(PDO::FETCH_OBJ);			
 	}
 	
-	public function filterInsert($insert, $table)
+	public function filter($insert, $table)
 	{
 		$columns = $this->dbh->query("SHOW COLUMNS FROM `$table`")->fetchAll();
 		$fields = array();
@@ -162,6 +164,10 @@ class PDOActiveRecord
 			}
 		}
 		
+		if(count($insert)===0)
+		{
+			throw new Exception('At least one field must be passed as data.  Check to make sure fields exist in Database');
+		}
 		return $insert;
 	}
 	
