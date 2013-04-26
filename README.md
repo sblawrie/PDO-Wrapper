@@ -5,15 +5,15 @@ A PDO Active Record Class for PHP
 
 Extend the PDOActiveRecord class with another class for each database connection:
 
-<?php 
-class MyRemoteDB extends PDOActiveRecord
-{
-  public $host = 'host';
-	public $db_name = 'dbname';
-	public $db_username = 'username';
-	public $db_password = 'password';
-}
-?>
+	<?php 
+	class MyRemoteDB extends PDOActiveRecord
+	{
+	  	public $host = 'host';
+		public $db_name = 'dbname';
+		public $db_username = 'username';
+		public $db_password = 'password';
+	}
+	?>
 
 Then, just instantiate that class and go!
 
