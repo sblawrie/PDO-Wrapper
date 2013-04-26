@@ -26,11 +26,11 @@ Then, just instantiate that class and go!
 	
 	$FieldValue = $RemoteDB->getByField($tablename, $fieldname, $value);
 	
-	or
+	//or
 	
 	$Objects = $RemoteDB->getAllByWhere($tablename, $array);
 	
-	or 
+	//or 
 	
 	$NewObject = $RemoteDB->create($tablename, $array);
 ```
