@@ -40,7 +40,6 @@ Just instantiate the class and go!
 
 If you don't want to pass a $config variable everytime, create a new class that extends PDOActiveRecord with the config variables set and instantiate that class, instead:
 ```php
-	<?php 
 	class MyRemoteDB extends \Emergence\ActiveRecordPDO\PDOActiveRecord
 	{
 	  	public $host = 'XXX';
