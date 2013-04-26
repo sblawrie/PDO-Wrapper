@@ -44,7 +44,6 @@ If you don't want to pass a $config variable everytime, create a new class that 
 		public $db_username = 'XXX';
 		public $db_password = 'XXX';
 	}
-	?>
 	
 	$RemoteDB = new MyRemoteDB();
 ```
