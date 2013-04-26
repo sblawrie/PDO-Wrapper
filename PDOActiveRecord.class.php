@@ -19,7 +19,7 @@ class PDOActiveRecord
 		}	
 		if(empty($this->host) || empty($this->db_name))
 		{
-			throw new Exception('Configuration Host and Database Name no properly set');
+			throw new Exception('Configuration Host or Database Name not properly set');
 		}
 		try 
 		{
