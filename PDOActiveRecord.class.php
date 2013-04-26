@@ -2,11 +2,13 @@
 
 class PDOActiveRecord
 {
-  public $host;
+  	public $host;
 	public $db_name; 
 	public $db_username; 
 	public $db_password;
 	public $dbh;
+	
+	public $primaryKey = 'id';
 	
 	function __construct($config = false) 
 	{
@@ -32,14 +34,9 @@ class PDOActiveRecord
 		}
 	}
 	
-	public function create($table, $insert, $timestamp = true)
+	public function create($table, $insert)
 	//Timestamp always set unless otherwise specified
-	{
-		if(!isset($insert['created_at']) && $timestamp)
-		{
-			$insert['created_at'] = date("Y-m-d g:i:s");
-		}
-		
+	{		
 		// Filter out fields that don't exist
 		$insert = $this->filterInsert($insert, $table);
 		//End Filter
@@ -63,16 +60,12 @@ class PDOActiveRecord
 		//to check that there is an id field before using it to get the last object
 		if($this->dbh->lastInsertId())
 		{
-			$stmt = $this->dbh->query("SELECT * FROM $table WHERE id='" . $this->dbh->lastInsertId() . "'");
+			$stmt = $this->dbh->query("SELECT * FROM $table WHERE {$this->primaryKey}='" . $this->dbh->lastInsertId() . "'");
 			return $stmt->fetch(PDO::FETCH_OBJ);
 		}
 		else
 		//if there isn't, just get the object by fields
 		{
-			if($timestamp)
-			{
-				unset($insert['created_at']);
-			}
 			return $this->getByWhere($table, $insert);
 		}
 		
@@ -88,7 +81,7 @@ class PDOActiveRecord
 			$tmp[] = "$key=?";
 		}
 		$str = implode(', ', $tmp);
-		$sql = "UPDATE $table SET $str WHERE id='" . $object->id . "'";
+		$sql = "UPDATE $table SET $str WHERE {$this->primaryKey}='" . $object->id . "'";
 		$query = $this->dbh->prepare($sql);
 		$query->execute(array_values($insert));
 		return $this->dbh->exec($sql);
@@ -97,19 +90,13 @@ class PDOActiveRecord
 	
 	public function getByID($table, $id)
 	{
-		$stmt = $this->dbh->query("SELECT * FROM $table WHERE id='" . $id  . "'");	
-		return $stmt->fetch(PDO::FETCH_OBJ);
+		return $this->getByField($table, $this->primaryKey, $id);
 	}
 	
 	public function getByField($table, $field, $value, $options = false)
 	{
-		$sql = "SELECT * FROM $table WHERE $field='" . $value  . "'";
-		if($options)
-		{
-			$sql .= ' ' . $options;
-		}
-		$stmt = $this->dbh->query($sql);	
-		return $stmt->fetch(PDO::FETCH_OBJ);
+		$data = array($field=>$value);
+		return $this->getByWhere($table, $data, $options);
 	}
 	
 	public function getByWhere($table, $data, $options = false)
@@ -178,22 +165,6 @@ class PDOActiveRecord
 			if(!isset($fields[$key]))
 			{
 				unset($insert[$key]);
-			}
-		}
-		
-		if(isset($insert['created_at']))
-		{
-			if(ctype_digit($insert['created_at']))
-			{
-				$insert['created_at'] = date("Y-m-d g:i:s", $insert['created_at']);
-			}
-		}
-		
-		if(isset($insert['updated_at']))
-		{
-			if(ctype_digit($insert['updated_at']))
-			{
-				$insert['updated_at'] = date("Y-m-d g:i:s", $insert['updated_at']);
 			}
 		}
 		
