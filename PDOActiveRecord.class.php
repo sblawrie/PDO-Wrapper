@@ -8,8 +8,19 @@ class PDOActiveRecord
 	public $db_password;
 	public $dbh;
 	
-	function __construct() 
-	{		
+	function __construct($config = false) 
+	{
+		if(is_array($config))
+		{
+			$this->host = $config['host'];
+			$this->db_name = $config['db_name'];
+			$this->db_username = $config['db_username'];
+			$this->db_password = $config['db_password'];
+		}	
+		if(empty($this->host) || empty($this->db_name))
+		{
+			throw new Exception('Configuration Host and Database Name no properly set');
+		}
 		try 
 		{
 		    $this->dbh = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->db_username, $this->db_password);
