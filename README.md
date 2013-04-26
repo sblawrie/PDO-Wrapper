@@ -50,3 +50,6 @@ If you don't want to pass a $config variable everytime, create a new class that 
 	
 	$RemoteDB = new MyRemoteDB();
 ```
+
+
+Note: This only works with MySQL right now.
