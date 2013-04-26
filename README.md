@@ -22,7 +22,7 @@ Just instantiate the class and go!
 	
 	//Instantiate DB Connection
 	
-	$RemoteDB = new PDOActiveRecord($config);
+	$RemoteDB = new  \Emergence\ActiveRecordPDO\PDOActiveRecord($config);
 	
 	//Make Calls
 	
@@ -41,7 +41,7 @@ Just instantiate the class and go!
 If you don't want to pass a $config variable everytime, create a new class that extends PDOActiveRecord with the config variables set and instantiate that class, instead:
 ```php
 	<?php 
-	class MyRemoteDB extends PDOActiveRecord
+	class MyRemoteDB extends \Emergence\ActiveRecordPDO\PDOActiveRecord
 	{
 	  	public $host = 'XXX';
 		public $db_name = 'XXX';
