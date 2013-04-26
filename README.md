@@ -39,10 +39,12 @@ If you don't want to pass a $config variable everytime, create a new class that 
 	<?php 
 	class MyRemoteDB extends PDOActiveRecord
 	{
-	  	public $host = 'host';
-		public $db_name = 'dbname';
-		public $db_username = 'username';
-		public $db_password = 'password';
+	  	public $host = 'XXX';
+		public $db_name = 'XXX';
+		public $db_username = 'XXX';
+		public $db_password = 'XXX';
 	}
 	?>
+	
+	$RemoteDB = new MyRemoteDB();
 ```
