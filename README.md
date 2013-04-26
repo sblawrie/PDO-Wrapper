@@ -26,7 +26,7 @@ Just instantiate the class and go!
 	
 	//Make Calls
 	
-	$FieldValue = $RemoteDB->getByField($tablename, $fieldname, $value);
+	$Object = $RemoteDB->getByField($tablename, $fieldname, $value);
 	
 	//or
 	
