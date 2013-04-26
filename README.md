@@ -3,24 +3,22 @@ PDO-Active-Record
 
 A PDO Active Record Class for PHP
 
-Extend the PDOActiveRecord class with another class for each database connection:
-```php
-	<?php 
-	class MyRemoteDB extends PDOActiveRecord
-	{
-	  	public $host = 'host';
-		public $db_name = 'dbname';
-		public $db_username = 'username';
-		public $db_password = 'password';
-	}
-	?>
-```
 
-Then, just instantiate that class and go!
+Just instantiate the class and go!
+
 ```php
+	//Set Database Configuration
+	
+	$config = array(
+		'host' => 'XXX'
+		,'db_name' => 'XXX'
+		,'db_username' => 'XXX'
+		,'db_password' => 'XXX'
+	);
+	
 	//Instantiate DB Connection
 	
-	$RemoteDB = new MyRemoteDB();
+	$RemoteDB = new PDOActiveRecord($config);
 	
 	//Make Calls
 	
@@ -33,4 +31,18 @@ Then, just instantiate that class and go!
 	//or 
 	
 	$NewObject = $RemoteDB->create($tablename, $array);
+```
+
+
+If you don't want to pass a $config variable everytime, create a new class that extends PDOActiveRecord with the config variables set and instantiate that class, instead:
+```php
+	<?php 
+	class MyRemoteDB extends PDOActiveRecord
+	{
+	  	public $host = 'host';
+		public $db_name = 'dbname';
+		public $db_username = 'username';
+		public $db_password = 'password';
+	}
+	?>
 ```
