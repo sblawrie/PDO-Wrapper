@@ -70,15 +70,19 @@ class PDOActiveRecord
 	public function update($table, $insert, $object)
 	{
 		$tmp = array();
+		$primaryKey = $this->getPrimaryKey($table);
 		$insert = $this->filter($insert, $table);
+		
 		foreach($insert as $key=>$value)
 		{
 			$tmp[] = "$key=?";
 		}
 		$str = implode(', ', $tmp);
-		$sql = "UPDATE $table SET $str WHERE {$this->getPrimaryKey($table)}='" . $object->id . "'";
+		
+		$sql = "UPDATE $table SET $str WHERE $primaryKey='" . $object->$primaryKey . "'";
 		$query = $this->dbh->prepare($sql);
 		$query->execute(array_values($insert));
+		
 		return $this->dbh->exec($sql);
 
 	}
