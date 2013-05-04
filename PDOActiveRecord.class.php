@@ -63,8 +63,6 @@ class PDOActiveRecord
 		{
 			return $this->getByWhere($table, $insert);
 		}
-		
-
 	}
 	
 	public function update($table, $insert, $object)
@@ -84,7 +82,6 @@ class PDOActiveRecord
 		$query->execute(array_values($insert));
 		
 		return $this->dbh->exec($sql);
-
 	}
 	
 	public function getByID($table, $id)
