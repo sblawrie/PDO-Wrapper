@@ -1,7 +1,7 @@
-PDO-Active-Record
+PDO-Wrapper
 =================
 
-A PDO Active Record Class for PHP
+A PDO Wrapper Class for PHP
 
 
 Just instantiate the class and go!
